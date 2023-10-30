@@ -46,8 +46,8 @@ if [ "$(id -u)" -eq 0 ]; then # as root user
 	apt-get build-dep --quiet \
 		pngquant
 	# install go from golang.org
-	wget https://golang.org/dl/go${GO_VERSION}.linux-arm64.tar.gz
-	tar -xvf go${GO_VERSION}.linux-arm64.tar.gz
+	wget https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz
+	tar -xvf go${GO_VERSION}.linux-amd64.tar.gz
 	mv go /usr/local
 	export GOROOT=/usr/local/go
 	export PATH=$GOROOT/bin:$PATH
@@ -95,10 +95,10 @@ popd
 
 # prepare the go build environment
 install --directory "${HOME}/go/bin"
-if [ "$(go env GOOS)_$(go env GOARCH)" != 'linux_arm64' ]; then
+if [ "$(go env GOOS)_$(go env GOARCH)" != 'linux_amd64' ]; then
 	ln --symbolic \
 		"${HOME}/go/bin/$(go env GOOS)_$(go env GOARCH)" \
-		"${HOME}/go/bin/linux_arm64"
+		"${HOME}/go/bin/linux_amd64"
 fi
 # build mmctl
 install --directory "${HOME}/go/src/github.com/mattermost/mmctl"
@@ -147,7 +147,7 @@ make --directory="${HOME}/go/src/github.com/mattermost/mattermost-server" \
 	GO="GOARCH=$(go env GOARCH) GOOS=$(go env GOOS) $(command -v go)" \
 	PLUGIN_PACKAGES=''
 # rename archive and calculate its SHA512 sum
-mv "${HOME}/go/src/github.com/mattermost/mattermost-server/dist/mattermost-team-linux-arm64.tar.gz" \
+mv "${HOME}/go/src/github.com/mattermost/mattermost-server/dist/mattermost-team-linux-amd64.tar.gz" \
 	"${HOME}/mattermost-${MATTERMOST_RELEASE}-$(go env GOOS)-$(go env GOARCH).tar.gz"
 sha512sum "${HOME}/mattermost-${MATTERMOST_RELEASE}-$(go env GOOS)-$(go env GOARCH).tar.gz" | \
 	tee "${HOME}/mattermost-${MATTERMOST_RELEASE}-$(go env GOOS)-$(go env GOARCH).tar.gz.sha512sum"
