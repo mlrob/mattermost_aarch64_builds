@@ -91,7 +91,6 @@ install --directory "${HOME}/go/src/github.com/mattermost/focalboard"
 
 # install mattermost-webapp's required version of nodejs
 
-#/build/go/src/github.com/mattermost/focalboard/webapp/.nvmrc
 #/build/go/src/github.com/mattermost/mattermost-server/.nvmrc
 pushd "${HOME}/go/src/github.com/mattermost/mattermost-server"
 nvm install
@@ -104,6 +103,7 @@ if [ "$(go env GOOS)_$(go env GOARCH)" != 'linux_amd64' ]; then
 		"${HOME}/go/bin/$(go env GOOS)_$(go env GOARCH)" \
 		"${HOME}/go/bin/linux_amd64"
 fi
+
 # build mmctl
 install --directory "${HOME}/go/src/github.com/mattermost/mmctl"
 wget --quiet --continue --output-document="mmctl.tar.gz" \
@@ -118,11 +118,14 @@ make --directory="${HOME}/go/src/github.com/mattermost/mmctl" \
 	BUILD_NUMBER="dev-$(go env GOOS)-$(go env GOARCH)-${MMCTL_RELEASE}" \
 	ADVANCED_VET=0 \
 	GO="GOARCH= GOOS= $(command -v go)"
+
 # build focalboard
+#/build/go/src/github.com/mattermost/focalboard/webapp/.nvmrc
 make --directory="${HOME}/go/src/github.com/mattermost/focalboard" \
 	prebuild
 make --directory="${HOME}/go/src/github.com/mattermost/focalboard" \
-	build
+	linux-app
+ 
 # build Mattermost webapp
 npm set progress false
 sed -i -e 's#--verbose#--display minimal#' \
