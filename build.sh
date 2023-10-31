@@ -90,9 +90,11 @@ install --directory "${HOME}/go/src/github.com/mattermost/focalboard"
 		--strip-components=1 --extract --file="focalboard.tar.gz"
 
 # install mattermost-webapp's required version of nodejs
-pushd "${HOME}/go/src/github.com/mattermost/"
-nvm install
-popd
+find ${HOME}/ -iname \*nvm\*
+#pushd "${HOME}/go/src/github.com/mattermost/"
+#nvm install
+#popd
+exit 0
 
 # prepare the go build environment
 install --directory "${HOME}/go/bin"
