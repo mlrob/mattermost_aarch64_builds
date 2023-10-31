@@ -74,7 +74,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # download and extract Mattermost sources
-for COMPONENT in server webapp; do
+for COMPONENT in server; do ## mono-repo webapp
 	install --directory "${HOME}/go/src/github.com/mattermost/mattermost-${COMPONENT}"
 	wget --quiet --continue --output-document="mattermost-${COMPONENT}.tar.gz" \
 		"https://github.com/mattermost/mattermost-${COMPONENT}/archive/${MATTERMOST_RELEASE}.tar.gz"
