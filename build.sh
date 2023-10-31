@@ -7,6 +7,7 @@ BUILD_USER_NAME="${BUILD_USER_NAME:-build}"
 DEBIAN_RELEASE="${DEBIAN_RELEASE:-stretch}"
 # Mattermost version to build
 MATTERMOST_RELEASE="${MATTERMOST_RELEASE:-v9.1.1}"
+FOCALBOARD_RELEASE="${FOCALBOARD_RELEASE:-v7.11.3}"
 MMCTL_RELEASE="${MMCTL_RELEASE:-v7.10.0}"
 # golang version
 GO_VERSION="${GO_VERSION:-1.19}"
@@ -84,7 +85,7 @@ done
 # download and extract focalboard
 install --directory "${HOME}/go/src/github.com/mattermost/focalboard"
 	wget --quiet --continue --output-document="focalboard.tar.gz" \
-		"https://github.com/mattermost/focalboard/archive/${MATTERMOST_RELEASE}.tar.gz"
+		"https://github.com/mattermost/focalboard/archive/${FOCALBOARD_RELEASE}.tar.gz"
 	tar --directory="${HOME}/go/src/github.com/mattermost/focalboard" \
 		--strip-components=1 --extract --file="focalboard.tar.gz"
 
