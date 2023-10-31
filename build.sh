@@ -129,11 +129,12 @@ echo ">>> mmctl finished"
 echo ">>> focalboard skipped!!"
 
 # build Mattermost webapp
-echo ">>> mattermost webapp start"
-npm set progress false
-sed -i -e 's#--verbose#--display minimal#' "${HOME}/go/src/github.com/mattermost/mattermost-server/webapp/package.json"
-make --directory="${HOME}/go/src/github.com/mattermost/mattermost-server/webapp" build
-echo ">>> mattermost webapp finished"
+#echo ">>> mattermost webapp start"
+#npm set progress false
+#sed -i -e 's#--verbose#--display minimal#' "${HOME}/go/src/github.com/mattermost/mattermost-server/webapp/package.json"
+#make --directory="${HOME}/go/src/github.com/mattermost/mattermost-server/webapp" build
+#echo ">>> mattermost webapp finished"
+echo ">>> mattermost webapp skipped!!"
 
 # build Mattermost server
 echo ">>> mattermost server start"
