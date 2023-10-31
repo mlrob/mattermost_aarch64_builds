@@ -118,23 +118,26 @@ make --directory="${HOME}/go/src/github.com/mattermost/mmctl" \
 	BUILD_NUMBER="dev-$(go env GOOS)-$(go env GOARCH)-${MMCTL_RELEASE}" \
 	ADVANCED_VET=0 \
 	GO="GOARCH= GOOS= $(command -v go)"
+echo ">>> mmctl finished"
 
 # build focalboard
-#/build/go/src/github.com/mattermost/focalboard/webapp/.nvmrc
-make --directory="${HOME}/go/src/github.com/mattermost/focalboard" \
-	prebuild
-make --directory="${HOME}/go/src/github.com/mattermost/focalboard" \
-	linux-app
- 
+#echo ">>> focalboard start"
+##/build/go/src/github.com/mattermost/focalboard/webapp/.nvmrc
+#make --directory="${HOME}/go/src/github.com/mattermost/focalboard" prebuild
+#make --directory="${HOME}/go/src/github.com/mattermost/focalboard" linux-app
+#echo ">>> focalboard finished"
+echo ">>> focalboard skipped!!"
+
 # build Mattermost webapp
+echo ">>> mattermost webapp start"
 npm set progress false
-sed -i -e 's#--verbose#--display minimal#' \
-	"${HOME}/go/src/github.com/mattermost/mattermost-webapp/package.json"
-make --directory="${HOME}/go/src/github.com/mattermost/mattermost-webapp" \
-	build
+sed -i -e 's#--verbose#--display minimal#' "${HOME}/go/src/github.com/mattermost/webapp/package.json"
+make --directory="${HOME}/go/src/github.com/mattermost/webapp" build
+echo ">>> mattermost webapp finished"
+
 # build Mattermost server
-patch --directory="${HOME}/go/src/github.com/mattermost/mattermost-server" \
-	--strip=1 -t < "${HOME}/build-release.patch"
+echo ">>> mattermost server start"
+patch --directory="${HOME}/go/src/github.com/mattermost/mattermost-server" --strip=1 -t < "${HOME}/build-release.patch"
 sed -i \
 	-e 's#go generate#env --unset=GOOS --unset=GOARCH go generate#' \
 	-e 's#$(GO) generate#env --unset=GOOS --unset=GOARCH go generate#' \
@@ -153,6 +156,8 @@ make --directory="${HOME}/go/src/github.com/mattermost/mattermost-server" \
 	BUILD_ENTERPRISE=0 \
 	GO="GOARCH=$(go env GOARCH) GOOS=$(go env GOOS) $(command -v go)" \
 	PLUGIN_PACKAGES=''
+echo ">>> mattermost server finished"
+
 # rename archive and calculate its SHA512 sum
 mv "${HOME}/go/src/github.com/mattermost/mattermost-server/dist/mattermost-team-linux-amd64.tar.gz" \
 	"${HOME}/mattermost-${MATTERMOST_RELEASE}-$(go env GOOS)-$(go env GOARCH).tar.gz"
